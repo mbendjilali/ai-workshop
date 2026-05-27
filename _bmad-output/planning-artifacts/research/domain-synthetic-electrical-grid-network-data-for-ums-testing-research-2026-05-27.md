@@ -4,40 +4,71 @@ inputDocuments: []
 workflowType: 'research'
 lastStep: 6
 research_type: 'domain'
-research_topic: 'Synthetic electrical grid network data generation for third-party utility management system (UMS) testing'
-research_goals: 'Define required data types, map applicable industry standards, and characterize what UMS vendors typically need in test environments'
+research_topic: 'Synthetic electrical grid network data generation for GridOS and third-party utility management system (UMS) testing'
+research_goals: 'Define required data types, map applicable industry standards, characterize UMS test-environment needs, and align recommendations with Alteia development for GE Vernova GridOS'
+product_context:
+  developer: 'Alteia'
+  sponsor_portfolio: 'GridOS (GE Vernova Electrification Software)'
+  parent_company: 'GE Vernova Inc.'
 user_name: 'Bemobrr'
 date: '2026-05-27'
+last_revised: '2026-05-27'
+revision_note: 'Reframed for Alteia-built application targeting GridOS; added primary-sponsor requirements and ecosystem positioning'
 web_research_enabled: true
 source_verification: true
 ---
 
-# Synthetic Grid Network Data for UMS Testing: Comprehensive Domain Research
+# Synthetic Grid Network Data for GridOS & UMS Testing: Comprehensive Domain Research
 
-**Date:** 2026-05-27  
+**Date:** 2026-05-27 (revised)  
 **Author:** Bemobrr  
-**Research Type:** Domain
+**Research Type:** Domain  
+**Product context:** Application developed by **Alteia** for **GridOS®**, GE Vernova’s grid orchestration software portfolio ([GridOS](https://www.gevernova.com/software/products/gridos))
 
 ---
 
 ## Research Overview
 
-Utilities and UMS vendors increasingly need **realistic, standards-aligned, synthetic distribution and transmission network data** to test Advanced Distribution Management Systems (ADMS), Network Management Systems (NMS), Outage Management Systems (OMS), DERMS, and related operational software—without exposing production customer or critical-infrastructure data.
+Utilities and grid-software vendors need **realistic, standards-aligned, synthetic distribution and transmission network data** to test ADMS, NMS/OMS, DERMS, and orchestration platforms—without exposing production customer or critical-infrastructure data.
 
-This research maps the **data types** a synthetic generator must produce, the **industry standards** that govern interchange and semantics, and the **test-environment expectations** of major UMS vendors and integration patterns (GIS → CIM → ADMS). Findings are grounded in IEC/ENTSO-E specifications, IEEE benchmark feeders, DOE/NLR test-bed practice, and vendor implementation documentation (Oracle NMS, Schneider ArcFM, GE Vernova, GridAPPS-D).
+This research supports an **Alteia-developed synthetic network data application** intended for **GridOS** (GE Vernova) lab, regression, and integration testing, while remaining compatible with **third-party UMS** certification and partner IOP scenarios. It maps **data types**, **industry standards**, and **test-environment expectations**, with **primary alignment to GE Vernova’s federated grid data fabric and Network Model Orchestration** (Smallworld GIS ↔ GridOS ADMS/DERMS), and secondary coverage of Oracle, Schneider, and vendor-neutral benchmarks.
 
-**Confidence:** High for standards and data-model structure; Medium for market sizing (niche segment, few public figures).
+Findings are grounded in IEC/ENTSO-E specifications, IEEE benchmark feeders, DOE/NLR test-bed practice, GE Vernova GridOS product documentation, and peer UMS implementation guides.
+
+**Confidence:** High for standards and GridOS-adjacent integration patterns; Medium for internal GridOS schema/bindings (not fully public); Low for commercial market sizing.
+
+### Product and organizational context
+
+| Dimension | Detail |
+|-----------|--------|
+| **Developer** | Alteia (France-based AI / visual intelligence software; acquired by GE Vernova, closed **1 August 2025**) |
+| **Sponsor portfolio** | **GridOS®** — GE Vernova Electrification Software’s grid orchestration platform and application suite ([press release](https://www.gevernova.com/news/press-releases/ge-vernova-to-acquire-alteia-advancing-ai-enabled-gridos-visual-intelligence-software)) |
+| **Strategic fit** | Synthetic **electrical network models** complement Alteia’s core **visual intelligence** (satellite, LiDAR, imagery) by supplying standards-based **connectivity and engineering data** for GridOS ADMS/DERMS test beds without production GIS exports |
+| **Primary consumers** | GridOS product engineering (ADMS, DERMS, data fabric), partner/SI certification, utility sandbox migrations |
+| **Secondary consumers** | Third-party UMS vendors, integrators, and research platforms (GridAPPS-D, IEEE IOP-style validation) |
+
+**GridOS platform elements relevant to this application** ([GridOS overview](https://www.gevernova.com/software/products/gridos)):
+
+- **Federated grid data fabric** — common T&D network model, digital-twin foundation  
+- **GridOS ADMS** — distribution management, OMS-class capabilities, FLISR/VVO use cases ([GridOS ADMS](https://www.gevernova.com/software/products/gridos/advanced-distribution-management-system))  
+- **GridOS DERMS** — DER orchestration, modular integration with ADMS ([GridOS DERMS](https://www.gevernova.com/software/products/gridos/distributed-energy-resources-management-system))  
+- **Network Model Orchestration** — as-built / as-operated consistency across **Smallworld Electric Office** and ADMS ([GE GIS-ADMS blog](https://www.gevernova.com/software/blog/network-based-gis-and-adms-integration-shared-source-truth))  
+- **GridOS Visual Intelligence** — Alteia-powered visual + operational data fusion (future scenarios may link asset mRIDs to inspection overlays)
+
+**Implication for scope:** The generator is **not a standalone commercial UMS competitor**; it is an **enabling data product** for GridOS quality engineering, with outward-facing standards compliance where utilities and partners run heterogeneous ADMS stacks.
 
 ---
 
 ## Domain Research Scope Confirmation
 
-**Research Topic:** Synthetic electrical grid network data generation for third-party utility management system (UMS) testing  
+**Research Topic:** Synthetic electrical grid network data generation for **GridOS** and third-party UMS testing  
 
 **Research Goals:**
-- Catalog data types required for credible UMS test datasets
+- Catalog data types required for credible GridOS and UMS test datasets
 - Map industry standards (CIM, CGMES, IEC 61968, MultiSpeak, IEEE feeders, GIS models)
 - Describe what UMS vendors and integrators typically provision in lab/test environments
+- Prioritize requirements for **GE Vernova GridOS** (data fabric, ADMS, DERMS, Smallworld orchestration)
+- Position the **Alteia-developed** application within GridOS engineering and partner certification workflows
 
 **Domain Research Scope:** Industry structure, regulatory/standards landscape, technology trends, competitive/ecosystem view, implementation guidance  
 
@@ -47,39 +78,41 @@ This research maps the **data types** a synthetic generator must produce, the **
 
 ---
 
-# Powering UMS Validation Without Production Data: Domain Research on Synthetic Grid Network Models
+# Powering GridOS Validation Without Production Data: Domain Research on Synthetic Grid Network Models
 
 ## Executive Summary
 
-Third-party testing of Utility Management Systems (UMS)—spanning ADMS, NMS/OMS, DERMS, and enterprise integration layers—depends on a **shared electrical connectivity model** plus layered **engineering, operational, geographic, and telemetry data**. The de facto semantic backbone is the IEC **Common Information Model (CIM)** family (IEC 61970 for EMS/transmission operations, IEC 61968 for distribution and enterprise functions), with **CGMES profiles** for structured exchange and **IEC 61968-13 (CDPSM)** for distribution network analysis.
+**Alteia** (now part of **GE Vernova Electrification Software**) is developing a **synthetic electrical grid network data application** for **GridOS®**—GE Vernova’s grid orchestration portfolio—while preserving **third-party UMS** interoperability for partners and utilities. Testing of GridOS **ADMS**, **DERMS**, and the **federated grid data fabric** depends on a **shared electrical connectivity model** plus layered **engineering, operational, geographic, and telemetry data**. The de facto semantic backbone is the IEC **Common Information Model (CIM)** family (IEC 61970 for EMS/transmission operations, IEC 61968 for distribution and enterprise functions), with **CGMES profiles** for structured exchange and **IEC 61968-13 (CDPSM)** for distribution network analysis.
 
 UMS vendors rarely accept a single flat file: they expect **topology-correct connectivity** (terminals, connectivity nodes, feeder/subnetwork boundaries), **as-built vs as-operated** states, **GIS-aligned spatial context**, and—when testing advanced apps—**SCADA mappings**, **power-flow parameters**, and **scenario libraries** (outages, switching, DER, AMI). Public **IEEE/PNNL/EPRI test feeders** and platforms like **GridAPPS-D** establish benchmark expectations; the **IEEE 9500-node** extension explicitly addresses the gap where vendors previously built proprietary lab models.
 
 **Key findings:**
 - Minimum viable synthetic data = connectivity + voltage levels + feeder heads + switch states; ADMS power flow adds impedances, transformer data, conductor catalogs, and optional SCADA/AMI streams.
 - Standards alignment (CIM/XML, CGMES EQ/TP/SSH/SV, MultiSpeak for enterprise apps) reduces integration cost and is often contractually required.
-- Test environments mirror production topology pipelines (GIS → CIM adapter → model build → validation) with anonymized customer data and UTC-normalized time series.
+- **GridOS** test environments should mirror **Network Model Orchestration** (Smallworld ↔ fabric ↔ ADMS/DERMS), not only generic GIS→CIM paths; third-party stacks retain GIS → CIM → model build → validation patterns.
 
-**Strategic recommendations:**
-1. Target **CIM/CDPSM + CGMES subset** export with SHACL-validatable profiles and vendor-specific binding packs.
-2. Ship **tiered datasets** (connectivity-only, PF-ready, SCADA-simulated, AMI-enriched) mapped to Oracle/Schneider/GE import paths.
-3. Bundle **IEEE 13/123/8500/9500**-scale reference feeders plus stochastic perturbation for scale/stress testing.
-4. Provide **IOP-style test cases** (model import, reconfiguration, FLISR trigger, patch/diff exchange) documented per ENTSO-E conformity practice.
+**Strategic recommendations (GridOS-first):**
+1. **Primary:** Emit **CIM/CDPSM** models consumable by GridOS **federated data fabric** and **Network Model Orchestration** (as-built/as-operated, versioned branches); validate against **Smallworld ↔ ADMS** roundtrip patterns—not only generic third-party import.
+2. Ship **tiered datasets** (T0–T4) with a **GridOS binding pack** first, then optional Oracle/Schneider export profiles for partner IOP.
+3. Bundle **IEEE 13/123/8500/9500** feeders plus **DER-heavy** variants aligned to **GridOS DERMS** regression (PV clusters, flexible load, constraint events).
+4. Provide **IOP-style test cases** for model import, reconfiguration, FLISR, and orchestration scenarios; document separately for ENTSO-E CGMES vs GridOS internal QA.
+5. **Future alignment:** Reserve **mRID / asset ID** stability and geospatial hooks for **GridOS Visual Intelligence** (synthetic imagery metadata, not production orthophotos).
 
 ---
 
 ## Table of Contents
 
 1. [Research Introduction and Methodology](#1-research-introduction-and-methodology)
-2. [Core Data Types for Synthetic Grid Networks](#2-core-data-types-for-synthetic-grid-networks)
-3. [Industry Standards and Exchange Formats](#3-industry-standards-and-exchange-formats)
-4. [What UMS Vendors Need in Test Environments](#4-what-ums-vendors-need-in-test-environments)
-5. [Industry and Ecosystem Context](#5-industry-and-ecosystem-context)
-6. [Competitive and Solution Landscape](#6-competitive-and-solution-landscape)
-7. [Regulatory, Compliance, and Data Governance](#7-regulatory-compliance-and-data-governance)
-8. [Technical Trends and Synthetic Data Methods](#8-technical-trends-and-synthetic-data-methods)
-9. [Implementation Framework for a Synthetic Data Product](#9-implementation-framework-for-a-synthetic-data-product)
-10. [Research Methodology and Sources](#10-research-methodology-and-sources)
+2. [GridOS and Alteia Product Alignment](#2-gridos-and-alteia-product-alignment)
+3. [Core Data Types for Synthetic Grid Networks](#3-core-data-types-for-synthetic-grid-networks)
+4. [Industry Standards and Exchange Formats](#4-industry-standards-and-exchange-formats)
+5. [What UMS Vendors Need in Test Environments](#5-what-ums-vendors-need-in-test-environments)
+6. [Industry and Ecosystem Context](#6-industry-and-ecosystem-context)
+7. [Adjacent Solutions and Build-vs-Buy Context](#7-adjacent-solutions-and-build-vs-buy-context)
+8. [Regulatory, Compliance, and Data Governance](#8-regulatory-compliance-and-data-governance)
+9. [Technical Trends and Synthetic Data Methods](#9-technical-trends-and-synthetic-data-methods)
+10. [Implementation Framework (GridOS-First)](#10-implementation-framework-gridos-first)
+11. [Research Methodology and Sources](#11-research-methodology-and-sources)
 
 ---
 
@@ -89,25 +122,82 @@ UMS vendors rarely accept a single flat file: they expect **topology-correct con
 
 Grid modernization (DER, AMI, FLISR, Volt-VAR optimization) forces UMS products to consume **higher-fidelity network models** than legacy radial GIS exports provided. Vendors and utilities spend months building **lab environments** that replicate GIS→ADMS pipelines; synthetic data products that are **standards-native and scenario-rich** shorten certification, regression testing, and third-party integration projects.
 
-The IEEE PES 9500-node initiative notes vendors historically built **private test models** because no industry-standard feeder met **control-center operational scenario** needs—a direct product opportunity for a synthetic generator aligned to that benchmark ([IEEE 9500-node paper](https://cmte.ieee.org/pes-testfeeders/wp-content/uploads/sites/167/2022/03/9500-Node-PES-TPWRS-Paper-2022.01.14.pdf)).
+The IEEE PES 9500-node initiative notes vendors historically built **private test models** because no industry-standard feeder met **control-center operational scenario** needs—GridOS engineering teams face the same gap; a **GridOS-aligned synthetic generator** can replace ad hoc internal feeders ([IEEE 9500-node paper](https://cmte.ieee.org/pes-testfeeders/wp-content/uploads/sites/167/2022/03/9500-Node-PES-TPWRS-Paper-2022.01.14.pdf)).
 
 ### Methodology
 
 | Dimension | Approach |
 |-----------|----------|
-| Scope | Distribution-first (ADMS/DMS/OMS), with transmission/CGMES touchpoints where UMS suites span T&D |
-| Sources | IEC/ENTSO-E, IEEE PES, DOE/NLR GridAPPS-D, EPRI CIM primer, vendor implementation guides |
-| Verification | Cross-check data types against Oracle NMS ADMS guide, Schneider ArcFM feeder/ADMS docs, GridAPPS-D CDPSM |
-| Geography | North America emphasis (MultiSpeak, IEEE feeders); EU CGMES for TSO-style exchanges |
-| Limitations | Vendor-proprietary internal schemas not fully public; market size estimates sparse |
+| Scope | Distribution-first (GridOS ADMS/DERMS), with transmission/CGMES where fabric spans T&D |
+| Primary sponsor | GE Vernova GridOS platform, Network Model Orchestration, Alteia/Visual Intelligence integration path |
+| Sources | IEC/ENTSO-E, IEEE PES, DOE/NLR GridAPPS-D, EPRI CIM primer, GE Vernova GridOS docs, peer UMS guides |
+| Verification | Cross-check against GE GIS-ADMS orchestration, GridAPPS-D CDPSM, Oracle/Schneider for partner parity |
+| Geography | North America emphasis (MultiSpeak, IEEE feeders); EU CGMES for TSO/partner exchanges |
+| Limitations | GridOS internal model bindings and fabric APIs not fully public; market size estimates sparse |
 
 ---
 
-## 2. Core Data Types for Synthetic Grid Networks
+## 2. GridOS and Alteia Product Alignment
+
+### 2.1 Why Alteia builds network synthetics for GridOS
+
+Alteia’s acquisition into **GE Vernova Electrification Software** positions it as a core contributor to **GridOS**, not only **GridOS Visual Intelligence** ([GE Vernova acquires Alteia](https://www.gevernova.com/news/press-releases/ge-vernova-to-acquire-alteia-advancing-ai-enabled-gridos-visual-intelligence-software)). Visual AI answers *what the physical grid looks like*; **synthetic CIM/network data** answers *what the operational model contains* for ADMS/DERMS regression—especially when utilities cannot share GIS exports in dev/test.
+
+| Alteia strength | Synthetic network application role |
+|-----------------|--------------------------------------|
+| Visual data fusion (imagery, LiDAR, satellite) | Stable **asset IDs** and **geospatial anchors** for future visual↔model linking |
+| AI workflows for inspection / vegetation / damage | **Scenario feeders** stressing outage restoration and storm replay without real outages |
+| Integration with GridOS operational software | **CDPSM/CIM exports** ingestible by **data fabric** and **ADMS** test instances |
+
+### 2.2 GridOS consumption model (target architecture)
+
+```mermaid
+flowchart TB
+  subgraph alteia [Alteia application]
+    Gen[Synthetic network generator]
+    Val[CIM / CDPSM validator]
+    Scen[Scenario packs]
+  end
+  subgraph gridos [GridOS GE Vernova]
+    Fabric[Federated grid data fabric]
+    ADMS[GridOS ADMS]
+    DERMS[GridOS DERMS]
+    VI[GridOS Visual Intelligence]
+    SW[Smallworld Electric Office]
+  end
+  Bench[IEEE / EPRI / PNNL feeders] --> Gen
+  Gen --> Val
+  Val --> Fabric
+  Fabric --> ADMS
+  Fabric --> DERMS
+  SW <-->|Network Model Orchestration| Fabric
+  VI -.->|asset mRID / location hooks| Fabric
+  Scen --> ADMS
+```
+
+### 2.3 GridOS-specific test priorities
+
+Compared with generic third-party UMS testing, **GridOS lab environments** should emphasize:
+
+| Priority | Rationale |
+|----------|-----------|
+| **Single fabric, multiple apps** | ADMS + DERMS share network semantics ([GridOS DERMS + ADMS](https://www.gevernova.com/software/products/gridos/distributed-energy-resources-management-system)) |
+| **As-built / as-operated** | Network Model Orchestration and digital-twin narratives require **versioned model states** |
+| **DER stress cases** | DERMS modules need nameplate, constraint, and dispatch scenarios at scale |
+| **Orchestration events** | FLISR, outage, optimization-class events consistent with integrated OMS/DMS behavior |
+| **Partner parity exports** | Optional Oracle/Schneider bindings for **GridOS partner ecosystem** (AWS, Accenture, Infosys, etc.) IOP ([GridOS announcement](https://www.gevernova.com/news/press-releases/GE-Digital-Announces-GridOS-Software)) |
+
+### 2.4 Third-party UMS scope (retained)
+
+GridOS utilities often run **heterogeneous** operational stacks during migration or multi-vendor RFPs. The application should still produce **standards-neutral** CDPSM/CGMES and IEEE benchmark artifacts so GE teams and partners can certify **interop** without production data—sections 6–8 below retain Oracle/Schneider patterns as **secondary export profiles**.
+
+---
+
+## 3. Core Data Types for Synthetic Grid Networks
 
 Synthetic generators should emit data in **layers**, each validating independently before composite UMS load.
 
-### 2.1 Topological and Connectivity Model (Mandatory)
+### 3.1 Topological and Connectivity Model (Mandatory)
 
 | Data category | Representative elements | UMS usage |
 |---------------|-------------------------|-----------|
@@ -121,7 +211,7 @@ Synthetic generators should emit data in **layers**, each validating independent
 
 **GIS-native equivalents:** Esri Utility Network uses **terminals, connectivity rules, subnetwork controllers, containment** for secondary grids and multi-source circuits ([Esri UN for ADMS](https://www.udcus.com/blog/2018/05/22/why-esris-utility-network-model-better-adms)); Schneider ArcFM exports **Geodatabase Regions (GRR)** with `NetworkWithTerminalConnections` graphs ([ArcFM Feeder Services](https://www.productinfo.schneider-electric.com/arcfmsolution/feeder-services-config/Feeder%20Services%20Config/English/Feeder%20Services%20Config%20Guide%20(bookmap)_0000898548.xml/$/GRRsandTracingUNNetworkConnectivityCPT_DD01386647)).
 
-### 2.2 Electrical Engineering Parameters (ADMS / Power Flow)
+### 3.2 Electrical Engineering Parameters (ADMS / Power Flow)
 
 | Parameter class | Examples | Notes |
 |-----------------|----------|-------|
@@ -134,7 +224,7 @@ Synthetic generators should emit data in **layers**, each validating independent
 
 Oracle documents **tiered PF requirements**: *kVA mode* needs ratings, nominal voltages, transformer levels, service transformer sizes; *full PF* adds conductor catalogs ([Oracle NMS ADMS Implementation Guide](https://docs.oracle.com/en/industries/energy-water/network-management-system/251200/nms-adms-implementation-guide/G49136.pdf)).
 
-### 2.3 Operational and Real-Time Overlay
+### 3.3 Operational and Real-Time Overlay
 
 | Data type | Purpose in test |
 |-----------|-----------------|
@@ -146,7 +236,7 @@ Oracle documents **tiered PF requirements**: *kVA mode* needs ratings, nominal v
 
 Oracle SCADA adapters expect at minimum: **open/closed status, fault indicators, recloser lockout, V, I, P, Q, fault currents** ([Oracle ADMS guide](https://docs.oracle.com/en/industries/energy-water/network-management-system/2601/nms-adms-implementation-guide/F84776.pdf)).
 
-### 2.4 Enterprise and Asset Extensions
+### 3.4 Enterprise and Asset Extensions
 
 | Domain | Standard hook | Typical test need |
 |--------|---------------|-------------------|
@@ -156,7 +246,7 @@ Oracle SCADA adapters expect at minimum: **open/closed status, fault indicators,
 | DERMS | IEC 61968-5 | Dispatch, constraint events |
 | Customer | CIS linkage | Outage callbacks (synthetic PII) |
 
-### 2.5 Scenario and Time-Series Data
+### 3.5 Scenario and Time-Series Data
 
 UMS testing is not static—vendors need **repeatable scenarios**:
 
@@ -166,15 +256,15 @@ UMS testing is not static—vendors need **repeatable scenarios**:
 - **Load profiles** (daily/seasonal, heat storm)
 - **Market-time snapshots** for CGMES SSH/SV exchange cadence ([ENTSO-E CGMES Building Guide](https://eepublicdownloads.entsoe.eu/clean-documents/CIM_documents/Grid_Model_CIM/CGM%20BUILDING%20PROCESS%20IMPLEMENTATION%20GUIDE_v2.0.pdf))
 
-### 2.6 Data Quality Dimensions (Synthetic Must Simulate)
+### 3.6 Data Quality Dimensions (Synthetic Must Simulate)
 
 Utilities report **tens of thousands of GIS connectivity errors** blocking ADMS go-live ([DOE ADMS insights](https://www.energy.gov/sites/default/files/2024-02/11-02-2015_doe-voe-insights-into-advanced-distribution-management-systems-report_508.pdf)). A credible synthetic product should optionally inject **controlled defects** (orphan nodes, wrong phase, missing regulator data) for **validation tooling** tests, plus **gold-standard** clean sets for functional regression.
 
 ---
 
-## 3. Industry Standards and Exchange Formats
+## 4. Industry Standards and Exchange Formats
 
-### 3.1 IEC CIM Family (Semantic Foundation)
+### 4.1 IEC CIM Family (Semantic Foundation)
 
 | Standard | Scope | Relevance to synthetic UMS data |
 |----------|-------|--------------------------------|
@@ -187,7 +277,7 @@ Utilities report **tens of thousands of GIS connectivity errors** blocking ADMS 
 
 EPRI summarizes three CIM series: **61970** (grid operations/analysis), **61968** (enterprise + distribution business), unified UML model ([EPRI CIM Primer Ch.1](https://msites.epri.com/rd/research/062333/common-information-model-primer/chapter-1-introduction-to-the-iec-cim)).
 
-### 3.2 CGMES (Common Grid Model Exchange Specification)
+### 4.2 CGMES (Common Grid Model Exchange Specification)
 
 CGMES (IEC TS 61970-600-1/600-2) packages CIM into exchange **profiles** for TSO operations and planning ([ENTSO-E CGMES](https://www.entsoe.eu/digital/common-information-model/cim-for-grid-models-exchange/)):
 
@@ -203,7 +293,7 @@ CGMES (IEC TS 61970-600-1/600-2) packages CIM into exchange **profiles** for TSO
 
 **Product implication:** A synthetic generator should export **profile bundles** (multi-file RDF/XML CIM) with validation artifacts, not only ad hoc JSON.
 
-### 3.3 MultiSpeak (North American Enterprise Integration)
+### 4.3 MultiSpeak (North American Enterprise Integration)
 
 MultiSpeak defines **XML payloads + WSDL web services** for distribution utility enterprise apps (OMS, MDM, SCADA interfaces, work management) ([MultiSpeak overview](https://www.multispeak.org/what-is-multispeak/)). Listed in **NIST SGIP Catalog of Standards**; prevalent in cooperatives and many IOUs ([NRECA MultiSpeak](https://www.cooperative.com/programs-services/bts/Pages/MultiSpeak.aspx)).
 
@@ -211,7 +301,7 @@ IEC 61968 harmonization with MultiSpeak is documented (mapping CIM elements to M
 
 **Product implication:** Offer **MultiSpeak-shaped exports** for OMS/CIS/MDM integration testing where CIM alone is insufficient.
 
-### 3.4 Benchmark Network Catalogs (De Facto Test Standards)
+### 4.4 Benchmark Network Catalogs (De Facto Test Standards)
 
 | Source | Models | Formats | Role |
 |--------|--------|---------|------|
@@ -223,16 +313,16 @@ IEC 61968 harmonization with MultiSpeak is documented (mapping CIM elements to M
 
 The **9500-node** model was explicitly created so utilities and vendors share a **control-center-grade** reconfigurable feeder with OpenDSS/GridLAB-D/CIM validation ([IEEE 9500 paper](https://cmte.ieee.org/pes-testfeeders/wp-content/uploads/sites/167/2022/03/9500-Node-PES-TPWRS-Paper-2022.01.14.pdf)).
 
-### 3.5 GIS and Vendor-Specific Integration Standards
+### 4.5 GIS and Vendor-Specific Integration Standards
 
-| Pattern | Description |
-|---------|-------------|
-| **GIS → CIM XML → ADMS** | Cyient/utility pattern: CIM adapter in GIS, validation on ingest ([GIS-ADMS CIM blog](https://www.cyient.com/blog/toward-seamless-integration-of-gis-and-adms-in-electrical-utilities-with-common-information-model)) |
-| **Spec catalog / GRR** | Schneider: ADMS attributes in **spec catalog**, not bloated GIS; GRR encodes connectivity ([ArcFM ADMS spec](https://www.productinfo.schneider-electric.com/arcfmsolution/designer-xi-config/Designer%20XI%20Config/English/Designer%20XI%20Config%20Guide%20(bookmap)_0000282841.xml/$/SpecRequirementsforADMSIntegrationCPT_0001016162)) |
-| **CIM difference / patch** | Esri named-version edits → CIM diff for operator approval ([ADMS Patch Integration](https://www.productinfo.schneider-electric.com/arcfmsolution/feeder-services-config/Feeder%20Services%20Config/English/Feeder%20Services%20Config%20Guide%20(bookmap)_0000898548.xml/$/HowtoConfigureADMSPatchIntegrationCPT_DD00821401)) |
-| **Network Model Orchestration** | GE Vernova: single fabric across Smallworld GIS & ADMS ([GE GIS-ADMS](https://www.gevernova.com/software/blog/network-based-gis-and-adms-integration-shared-source-truth)) |
+| Pattern | Description | Relevance to GridOS / Alteia app |
+|---------|-------------|----------------------------------|
+| **Network Model Orchestration** | GE Vernova: single as-built/as-operated model across **Smallworld Electric Office** and **GridOS ADMS** ([GE GIS-ADMS](https://www.gevernova.com/software/blog/network-based-gis-and-adms-integration-shared-source-truth)) | **Primary** — synthetic data must load into federated fabric with versioned states |
+| **GIS → CIM XML → ADMS** | CIM adapter in GIS, validation on ingest ([GIS-ADMS CIM blog](https://www.cyient.com/blog/toward-seamless-integration-of-gis-and-adms-in-electrical-utilities-with-common-information-model)) | Reference pattern for partner utilities not on Smallworld |
+| **Spec catalog / GRR** | Schneider: ADMS attributes in **spec catalog**; GRR encodes connectivity ([ArcFM ADMS spec](https://www.productinfo.schneider-electric.com/arcfmsolution/designer-xi-config/Designer%20XI%20Config/English/Designer%20XI%20Config%20Guide%20(bookmap)_0000282841.xml/$/SpecRequirementsforADMSIntegrationCPT_0001016162)) | **Secondary** export profile |
+| **CIM difference / patch** | Esri named-version edits → CIM diff ([ADMS Patch Integration](https://www.productinfo.schneider-electric.com/arcfmsolution/feeder-services-config/Feeder%20Services%20Config/English/Feeder%20Services%20Config%20Guide%20(bookmap)_0000898548.xml/$/HowtoConfigureADMSPatchIntegrationCPT_DD00821401)) | **Secondary** — patch/diff scenario packs for partner IOP |
 
-### 3.6 Simulation and Solver Interchange
+### 4.6 Simulation and Solver Interchange
 
 | Format | Use |
 |--------|-----|
@@ -243,11 +333,11 @@ The **9500-node** model was explicitly created so utilities and vendors share a 
 
 ---
 
-## 4. What UMS Vendors Need in Test Environments
+## 5. What UMS Vendors Need in Test Environments
 
-“UMS” in vendor practice maps to **ADMS + NMS/OMS + SCADA + GIS integration**. Below is a consolidated **test environment checklist** synthesized from Oracle, Schneider, GE, DOE, and NLR sources.
+“UMS” in vendor practice maps to **ADMS + NMS/OMS + SCADA + GIS integration**. For this product, **GridOS is the primary UMS stack**; Oracle and Schneider patterns remain reference baselines for partner certification. Below is a consolidated **test environment checklist** synthesized from GE Vernova, Oracle, Schneider, DOE, and NLR sources.
 
-### 4.1 Environment Architecture
+### 5.1 Environment Architecture
 
 | Layer | Typical components |
 |-------|-------------------|
@@ -257,7 +347,7 @@ The **9500-node** model was explicitly created so utilities and vendors share a 
 | **Integration** | GIS export service, CIM import, optional MultiSpeak endpoints |
 | **Simulation** | External PF (e.g., GridAPPS-D), HIL test bed (DNP3/MODBUS) ([NLR ADMS Test Bed](https://www.nlr.gov/grid/adms-test-bed)) |
 
-### 4.2 Minimum vs Advanced Test Datasets
+### 5.2 Minimum vs Advanced Test Datasets
 
 | Tier | Contents | Validates |
 |------|----------|-----------|
@@ -267,9 +357,18 @@ The **9500-node** model was explicitly created so utilities and vendors share a 
 | **T3 – Enterprise** | T2 + synthetic AMI/CIS + MultiSpeak messages | OMS callbacks, MDM, VVO with AMI |
 | **T4 – Patch / delta** | Initial vs patched CIM diffs | Change management, training |
 
-### 4.3 Vendor-Specific Expectations
+### 5.3 Vendor-Specific Expectations
 
-**Oracle Utilities NMS / ADMS**
+**GE Vernova GridOS (primary sponsor)**
+
+- **Federated grid data fabric** — common T&D network model feeding ADMS, DERMS, and analytics ([GridOS](https://www.gevernova.com/software/products/gridos))
+- **GridOS ADMS** — integrated OMS/DMS-class capabilities; FLISR, VVO, storm/outage orchestration test cases ([GridOS ADMS](https://www.gevernova.com/software/products/gridos/advanced-distribution-management-system))
+- **GridOS DERMS** — DER registration, constraint, and dispatch scenarios; co-test with ADMS ([GridOS DERMS](https://www.gevernova.com/software/products/gridos/distributed-energy-resources-management-system))
+- **Network Model Orchestration** — as-built/as-operated consistency with **Smallworld Electric Office**; target **30% lower integration cost / 50% fewer sync errors** vs disjoint GIS-ADMS ([GE blog](https://www.gevernova.com/software/blog/network-based-gis-and-adms-integration-shared-source-truth))
+- **Hybrid cloud / zero-trust** lab topologies — on-prem, cloud, or edge deployments per GridOS platform options
+- **Alteia / Visual Intelligence** — stable asset identifiers and locations for future visual↔model joins ([Alteia acquisition PR](https://www.gevernova.com/news/press-releases/ge-vernova-to-acquire-alteia-advancing-ai-enabled-gridos-visual-intelligence-software))
+
+**Oracle Utilities NMS / ADMS (secondary / partner parity)**
 - Single **NMS model** shared by OMS and DMS modules—no separate sync ([Oracle ADMS guide](https://docs.oracle.com/en/industries/energy-water/network-management-system/251200/nms-adms-implementation-guide/G49136.pdf))
 - Model build via **Distribution Model Workbook** + optional **Powerflow Engineering Data** workbook
 - Data precedence: GIS → Powerflow workbook → defaults
@@ -281,15 +380,11 @@ The **9500-node** model was explicitly created so utilities and vendors share a 
 - **GRR** exports from Utility Network with feeder sources and terminal graphs
 - **ADMS patch integration**: SDE default vs patched version → CIM differences ([Patch integration](https://www.productinfo.schneider-electric.com/arcfmsolution/feeder-services-config/Feeder%20Services%20Config/English/Feeder%20Services%20Config%20Guide%20(bookmap)_0000898548.xml/$/HowtoConfigureADMSPatchIntegrationCPT_DD00821401))
 
-**GE Vernova**
-- **Network Model Orchestration**—one as-built/as-operated model across GIS and ADMS
-- Claims: up to **30% lower integration cost**, **50% fewer sync errors** with integrated GIS-ADMS ([GE blog](https://www.gevernova.com/software/blog/network-based-gis-and-adms-integration-shared-source-truth))
-
 **GridAPPS-D (vendor-neutral R&D platform)**
 - CIM triple-store + messaging for app portability ([GridAPPS-D About](https://gridapps-d.org/about))
 - Eleven standard feeders for regression; encourages **CIM-compliant interfaces** for DMS vendors
 
-### 4.4 Test Scenarios Vendors Run
+### 5.4 Test Scenarios Vendors Run
 
 | Scenario class | Required data fidelity |
 |----------------|------------------------|
@@ -302,40 +397,45 @@ The **9500-node** model was explicitly created so utilities and vendors share a 
 | GIS patch approval | CIM diff initial/final states |
 | Training / DR | Operator workspace events, synthetic customers |
 
-### 4.5 Third-Party Testing Deliverables (Recommended Package)
+### 5.5 Recommended Deliverable Package (GridOS-first)
 
-For a synthetic data product sold to vendors or integrators:
+**Tier A — GridOS engineering (required)**
 
-1. **CIM/CDPSM XML** + SHACL validation report  
-2. **CGMES profile bundle** (EQ+TP+SSH, optional SV golden)  
-3. **OpenDSS/GridLAB-D mirrors** for independent PF proof  
-4. **SCADA point list** (CSV/JSON) keyed to device mRID  
-5. **Scenario scripts** (YAML): fault times, switch orders, load multipliers  
-6. **Synthetic CIS/AMI** (no real PII; GDPR-safe patterns)  
-7. **Import runbook** per target vendor (Oracle workbook mapping notes, ArcFM GRR field map)  
-8. **IOP test matrix** aligned to ENTSO-E FAT/SAT style cases ([ENTSO-E IOP](https://www.entsoe.eu/data/cim/cim-conformity-and-interoperability/))
+1. **CIM/CDPSM XML** validated for fabric ingest + **Network Model Orchestration** (as-built/as-operated pairs)  
+2. **GridOS scenario packs** — FLISR/outage/DERMS constraint scripts keyed to fabric mRIDs  
+3. **IEEE 9500 / 8500** gold feeders + GridOS-specific perturbations (DER penetration, reconfiguration)  
+4. **OpenDSS/GridLAB-D mirrors** for independent PF proof before ADMS load  
+5. **GridOS QA runbook** — fabric import, ADMS regression checklist, DERMS co-test matrix  
+
+**Tier B — Partner / third-party UMS (optional)**
+
+6. **CGMES profile bundle** (EQ+TP+SSH, optional SV) for ENTSO-E-style IOP  
+7. **SCADA point list** (CSV/JSON) keyed to device mRID  
+8. **Synthetic CIS/AMI** (no real PII)  
+9. **Import runbooks** — Oracle workbook, ArcFM GRR (partner ecosystems)  
+10. **ENTSO-E FAT/SAT-style IOP matrix** ([ENTSO-E IOP](https://www.entsoe.eu/data/cim/cim-conformity-and-interoperability/))
 
 ---
 
-## 5. Industry and Ecosystem Context
+## 6. Industry and Ecosystem Context
 
 ### Market Dynamics
 
 - **ADMS/DMS market** is driven by grid modernization, outage reduction, and DER—not easily isolated from “synthetic data,” but growth in **digital twin** and **model-driven testing** expands addressable need.
-- **Pain point:** Multi-year GIS remediation before ADMS go-live ([DOE report](https://www.energy.gov/sites/default/files/2024-02/11-02-2015_doe-voe-insights-into-advanced-distribution-management-systems-report_508.pdf)) → **synthetic gold models** accelerate vendor QA and utility UAT.
+- **Pain point:** Multi-year GIS remediation before ADMS go-live ([DOE report](https://www.energy.gov/sites/default/files/2024-02/11-02-2015_doe-voe-insights-into-advanced-distribution-management-systems-report_508.pdf)) → **synthetic gold models** accelerate **GridOS** QA, Alteia feature development, and utility UAT without production GIS.
 - **Public investment:** DOE GridAPPS-D, NLR ADMS Test Bed fund **vendor-neutral** interoperability ([NLR ADMS](https://www.nlr.gov/grid/advanced-distribution-management)).
 
 ### Value Chain
 
 ```mermaid
 flowchart LR
-  GIS[GIS / Utility Network] --> CIM[CIM / GRR Export]
-  CIM --> Build[Model Build / ETL]
-  Build --> UMS[UMS Operational DB]
-  SCADA[SCADA / AMI] --> UMS
-  Synth[Synthetic Data Generator] --> CIM
-  Synth --> SCADA
-  UMS --> Apps[ADMS OMS FLISR VVO DERMS]
+  GIS[Smallworld / GIS] --> Fabric[GridOS data fabric]
+  Fabric --> ADMS[GridOS ADMS]
+  Fabric --> DERMS[GridOS DERMS]
+  Synth[Alteia synthetic generator] --> Fabric
+  Synth --> CIM[CIM CDPSM export]
+  CIM --> Partner[Partner UMS IOP]
+  SCADA[SCADA / AMI sim] --> ADMS
   Bench[IEEE / EPRI Feeders] --> Synth
 ```
 
@@ -343,42 +443,46 @@ flowchart LR
 
 | Segment | Synthetic data need |
 |---------|-------------------|
-| **UMS vendors** | Regression, demo, certification, IOP |
-| **System integrators** | Migration rehearsal, CIM mapping tests |
-| **Utilities** | Training, sandbox, anonymized what-if |
+| **GE Vernova GridOS / Alteia engineering** | Fabric ingest, ADMS/DERMS regression, Visual Intelligence hooks |
+| **GridOS partner ecosystem** | AWS / SI certification, hybrid-cloud test tenants |
+| **Other UMS vendors** | IOP, competitive benchmark, migration parity |
+| **Utilities** | Training sandbox, anonymized what-if |
 | **Researchers / AI** | ML PF/OPF datasets ([gridfm-datakit](https://github.com/gridfm/gridfm-datakit)) |
 
 ---
 
-## 6. Competitive and Solution Landscape
+## 7. Adjacent Solutions and Build-vs-Buy Context
 
-### Categories of Solutions
+This application is **internal/enabling** to GridOS—not a retail SKU competing with benchmark libraries. The table below informs **build vs adopt vs partner** decisions for Alteia and GridOS platform teams.
 
-| Category | Examples | Gap vs UMS-focused synthetic network product |
-|----------|----------|-----------------------------------------------|
-| **Benchmark feeders** | IEEE, EPRI, PNNL, BetterGrids | Fixed topology; limited enterprise/SCADA layers |
-| **Research synthesizers** | gridfm-datakit, Chung-Lu-Chain | PF/ML-oriented; weak OMS/CIS/MultiSpeak |
-| **Platform test beds** | GridAPPS-D, NLR ADMS Test Bed | Environment, not commercial data SKU |
-| **Vendor reference models** | Oracle URMS accelerators | Tied to vendor stack |
-| **GIS vendors** | Esri UN, Schneider ArcFM | Source of truth, not synthetic factory |
+### Categories of Adjacent Solutions
 
-### Key Players (Integration / Standards)
+| Category | Examples | Relationship to Alteia GridOS application |
+|----------|----------|---------------------------------------------|
+| **Benchmark feeders** | IEEE, EPRI, PNNL, BetterGrids | **Seed topology** — extend with fabric-ready CDPSM + GridOS scenarios |
+| **Research synthesizers** | gridfm-datakit, Chung-Lu-Chain | **Optional engines** for PF/ML-scale stress; wrap with CIM export |
+| **Platform test beds** | GridAPPS-D, NLR ADMS Test Bed | **Validation venues** for standards compliance and HIL |
+| **Vendor reference models** | Oracle URMS accelerators | **Parity targets** for partner IOP only |
+| **GIS platforms** | Esri UN, Schneider ArcFM, GE Smallworld | Smallworld is **production path**; synthetics bypass GIS for lab |
 
-- **Standards bodies:** IEC, ENTSO-E, UCAIug (CIM management: [CIM Modeling Guide](https://cim-mg.ucaiug.io/latest/section9-artifacts-under-cim-management/))
-- **UMS vendors:** Oracle, Schneider Electric, GE Vernova, Hitachi Energy, Survalent, etc.
-- **GIS:** Esri, Schneider ArcFM, GE Smallworld
+### Ecosystem Positioning
+
+- **Standards bodies:** IEC, ENTSO-E, UCAIug ([CIM Modeling Guide](https://cim-mg.ucaiug.io/latest/section9-artifacts-under-cim-management/))
+- **GridOS portfolio owner:** GE Vernova Electrification Software ([GridOS](https://www.gevernova.com/software/products/gridos))
+- **Alteia:** Visual intelligence + synthetic network tooling under same portfolio post-acquisition
+- **Peer UMS (interop only):** Oracle, Schneider, Hitachi Energy, Survalent
 - **Open tooling:** PowSyBl, pandapower, CIMHub, GridAPPS-D
 
-### Differentiation Opportunities
+### Differentiation (why build inside Alteia/GridOS)
 
-- **Profile-aware validation** (CDPSM + CGMES + vendor binding)
-- **Operational scenario packs** (FLISR/FLA scripts with SCADA)
-- **Scale elasticity** (IEEE 13 → 9500 → synthetic city-scale)
-- **Defect injection / data quality scoring** for migration tooling QA
+- **Fabric-native CDPSM** with as-built/as-operated versioning for Network Model Orchestration  
+- **ADMS + DERMS joint scenario packs** not available in public IEEE feeders alone  
+- **Controlled defect injection** for data-quality and migration QA aligned to GE integration narratives  
+- **mRID stability** for future **Visual Intelligence** asset correlation  
 
 ---
 
-## 7. Regulatory, Compliance, and Data Governance
+## 8. Regulatory, Compliance, and Data Governance
 
 ### Standards Compliance (Product Requirements)
 
@@ -398,7 +502,7 @@ flowchart LR
 
 ---
 
-## 8. Technical Trends and Synthetic Data Methods
+## 9. Technical Trends and Synthetic Data Methods
 
 ### Emerging Approaches
 
@@ -412,7 +516,7 @@ flowchart LR
 
 ### Digital Twin Convergence
 
-Integrated **GIS-ADMS** orchestration treats the network model as a **living digital twin** (as-built/as-operated). Synthetic generators should support **versioned model branches** and **diff exports** matching patch-integration patterns.
+**GridOS Network Model Orchestration** treats the network model as a **living digital twin** (as-built/as-operated). The Alteia application should support **versioned model branches** and **diff exports** compatible with Smallworld–fabric–ADMS workflows, plus partner patch patterns (Esri CIM diff) where required.
 
 ### AI / ML Overlap
 
@@ -420,47 +524,52 @@ ML power-flow libraries need **structured per-bus/per-branch tensors** ([arxiv g
 
 ---
 
-## 9. Implementation Framework for a Synthetic Data Product
+## 10. Implementation Framework (GridOS-First)
 
 ### Phased Delivery
 
 | Phase | Deliverable | Success criteria |
 |-------|-------------|------------------|
-| **P1** | IEEE 13/123/8500 in CDPSM CIM + validation | Imports cleanly to PowSyBl/CIMHub |
-| **P2** | Parameterized feeder generator (radial + secondary) | PF within tolerance vs OpenDSS gold |
-| **P3** | SCADA + outage scenario packs | Triggers vendor FLISR/FLA test cases |
-| **P4** | MultiSpeak + synthetic CIS/AMI | OMS enterprise integration tests |
-| **P5** | Patch/diff + GIS-roundtrip | Schneider/Oracle patch workflows |
+| **P0** | GridOS fabric ingest spec (internal) | Agreed CDPSM subset + mRID rules with platform team |
+| **P1** | IEEE 13/123/8500/9500 in CDPSM | Loads to fabric; ADMS smoke PF/trace tests pass |
+| **P2** | Parameterized feeder + DER variants | GridOS DERMS constraint scenarios; PF vs OpenDSS gold |
+| **P3** | As-built/as-operated + orchestration scenarios | Network Model Orchestration roundtrip; FLISR/outage scripts |
+| **P4** | Visual Intelligence hooks (optional) | Stable asset IDs + synthetic geolocation metadata |
+| **P5** | Partner export packs | Oracle workbook / ArcFM GRR / CGMES IOP matrices |
 
 ### Risk Assessment
 
 | Risk | Mitigation |
 |------|------------|
-| Vendor schema drift | Versioned “binding packs” per UMS release |
-| CIM profile mismatch | SHACL validation + ENTSO-E-style IOP cases |
-| Unrealistic physics | Dual validation OpenDSS + pandapower |
-| Regulatory sensitivity | No real utility IDs; documented anonymization |
+| GridOS fabric binding drift | Versioned **GridOS binding pack** owned with platform releases |
+| CIM profile mismatch | SHACL validation + ENTSO-E-style IOP for partner tier |
+| Unrealistic physics | Dual validation OpenDSS + pandapower before ADMS promotion |
+| Alteia / ADMS scope creep | Keep v1 network-centric; defer imagery synthesis to Visual Intelligence |
+| Regulatory sensitivity | No real utility IDs; documented anonymization for all tiers |
 
 ### Strategic Recommendations (Immediate)
 
-1. **Adopt CDPSM + CGMES EQ/TP/SSH as core export**, with IEEE 9500 as flagship reference dataset.  
-2. **Publish tiered test kits** (T0–T4) with vendor import notes for Oracle workbook and ArcFM GRR.  
-3. **Partner or align with GridAPPS-D/BetterGrids** for credibility in R&D and vendor IOP.  
-4. **Offer scenario DSL** for FLISR/FLA/outage regression comparable to Oracle event types.  
-5. **Build validation CLI** (gridfm-style) adapted to **CIM connectivity rules**, not only AC-PF limits.
+1. **Anchor exports to CDPSM** consumable by **GridOS federated data fabric**, with IEEE 9500 as flagship regression feeder.  
+2. **Co-design P0–P3 with GridOS ADMS/DERMS QA** — joint scenario catalog beats generic third-party kits.  
+3. **Publish T0–T4 tiers** with **Tier A (GridOS)** and **Tier B (partner)** separation per section 5.5.  
+4. **Use GridAPPS-D / NLR patterns** for external credibility, not as primary runtime.  
+5. **Plan Visual Intelligence linkage** (asset mRID, bbox) without blocking v1 network-only delivery.
 
 ---
 
-## 10. Research Methodology and Sources
+## 11. Research Methodology and Sources
 
 ### Primary Authoritative Sources
 
+- GE Vernova GridOS portfolio, ADMS, DERMS (gevernova.com/software/products/gridos)
+- GE Vernova–Alteia acquisition press release and GridOS Visual Intelligence (gevernova.com/news, gevernova.com/software/blog)
+- GE Vernova Network Model Orchestration / GIS-ADMS (gevernova.com/software/blog)
 - IEC 61970-301, 61968-11/13/4 (webstore.iec.ch)
 - ENTSO-E CGMES and conformity framework (entsoe.eu)
 - IEEE PES Test Feeders (cmte.ieee.org/pes-testfeeders)
 - GridAPPS-D Powergrid-Models (github.com/GRIDAPPSD/Powergrid-Models)
-- Oracle NMS ADMS Implementation & Installation Guides (docs.oracle.com)
-- Schneider ArcFM Feeder Services / Designer XI docs (productinfo.schneider-electric.com)
+- Oracle NMS ADMS Implementation & Installation Guides (docs.oracle.com) — partner parity
+- Schneider ArcFM Feeder Services / Designer XI docs (productinfo.schneider-electric.com) — partner parity
 - DOE ADMS insights report (energy.gov)
 - NLR ADMS Test Bed (nlr.gov)
 
@@ -483,9 +592,10 @@ ML power-flow libraries need **structured per-bus/per-branch tensors** ([arxiv g
 |-------|------------|-------|
 | CIM/CGMES data types | High | IEC & ENTSO-E aligned |
 | Oracle NMS test needs | High | Official implementation guides |
-| Schneider/GE patterns | Medium-High | Vendor docs; some features version-specific |
-| Market size | Low | No direct public TAM for synthetic UMS data |
-| Exact proprietary schemas | Low | Not fully published |
+| GridOS fabric ingest / bindings | Medium | Platform marketing + integration blogs; internal APIs not public |
+| Schneider/Oracle patterns | Medium-High | Partner parity only |
+| Market size | Low | Internal enabling tool, not standalone TAM |
+| Exact GridOS proprietary schemas | Low | Not fully published |
 
 ### Limitations
 
@@ -497,12 +607,15 @@ ML power-flow libraries need **structured per-bus/per-branch tensors** ([arxiv g
 
 ## Research Conclusion
 
-Synthetic electrical grid network data for UMS testing is not a single dump of line segments—it is a **layered, standards-governed product** spanning **CIM connectivity**, **engineering parameters**, **operational overlays**, and **scenario time series**, validated against **public benchmark feeders** and **vendor import pipelines**. The strongest standards anchors are **IEC 61968-13 (CDPSM)** and **CGMES profiles**; the strongest procedural reference is **ENTSO-E-style conformity and IOP testing**. UMS vendors consistently need **topology-accurate models with GIS-consistent exports**, **tiered PF fidelity**, and **SCADA-driven event scripts** in **UTC-normalized** lab environments.
+For **Alteia’s synthetic grid network application on GridOS (GE Vernova)**, the deliverable is a **layered, standards-governed data product** that feeds the **federated grid data fabric** and supports **GridOS ADMS/DERMS** regression—while optionally exporting **CDPSM/CGMES** artifacts for partner UMS IOP. It is not a flat connectivity dump: it requires **CIM semantics**, **engineering parameters**, **as-built/as-operated states**, **orchestration scenarios**, and—over time—**stable asset keys** for **GridOS Visual Intelligence** integration.
 
-**Recommended next steps for product teams:** (1) prototype CDPSM export from a parameterized IEEE 123 feeder; (2) run import validation with target vendor toolchain; (3) add FLISR scenario pack with SCADA mapping template; (4) document conformance test matrix for third-party certification offerings.
+**Standards anchors:** IEC 61968-13 (CDPSM) primary; CGMES and MultiSpeak for partner tiers; IEEE 9500/8500 for control-center-grade benchmarks.
+
+**Recommended next steps for Alteia / GridOS teams:** (1) agree P0 fabric ingest subset with platform engineering; (2) promote IEEE 123 → 9500 CDPSM bundles through ADMS smoke tests; (3) publish GridOS Tier A scenario catalog (FLISR, DERMS constraints, orchestration); (4) defer Tier B partner runbooks until Tier A is stable; (5) document Visual Intelligence mRID/geolocation extension points for a follow-on release.
 
 ---
 
 **Research Completion Date:** 2026-05-27  
+**Last Revised:** 2026-05-27 (GridOS / Alteia product context)  
 **Document Status:** Complete (workflow steps 1–6)  
 **Source Verification:** Factual claims tied to cited public sources above
