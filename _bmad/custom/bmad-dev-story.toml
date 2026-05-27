@@ -1,0 +1,17 @@
+# Team overrides for bmad-dev-story (merged over skill customize.toml).
+
+[workflow]
+
+activation_steps_prepend = [
+  "Before OpenDSS/Docker-related work: run scripts/docker-preflight.sh when Docker is expected. If docker.sock is inaccessible and the user has not pasted verification output, HALT — do not mark tasks complete.",
+]
+
+persistent_facts = [
+  "file:{project-root}/_bmad-output/project-context.md",
+  "VERIFICATION GATE: Before story Status=review or sprint done, run scripts/verify-p0-spine.sh in this session (use required_permissions: all or sg docker). Record output under Dev Agent Record → Verification evidence.",
+  "NEVER use skip_opendss=True to satisfy export or mRID acceptance criteria.",
+  "pytest skips for @pytest.mark.opendss do NOT substitute for the shell verification gate.",
+  "BATCH mode only when the user explicitly says batch; otherwise exactly ONE story per cycle.",
+]
+
+on_complete = "Run: scripts/verify-p0-spine.sh (with Docker access). If exit non-zero, HALT — revert story to in-progress and do not update sprint to review/done. On success, append command, date, and last 5 lines of output to Dev Agent Record → Verification evidence."

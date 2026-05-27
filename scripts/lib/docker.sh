@@ -46,3 +46,28 @@ resolve_compose() {
 blazegraph_container_name() {
   echo "${BLAZEGRAPH_CONTAINER:-alteia-blazegraph}"
 }
+
+# Map container writes to the invoking user (avoids root-owned work/ artifacts).
+docker_user_mapping_args() {
+  echo -u "$(id -u):$(id -g)"
+}
+
+# Run a shell command with Docker socket access (direct or sg docker).
+with_docker_access() {
+  if docker info >/dev/null 2>&1; then
+    "$@"
+    return $?
+  fi
+  if groups | grep -q '\bdocker\b'; then
+    echo "NOTE: using sg docker for Docker socket access" >&2
+    sg docker -c "$(printf '%q ' "$@")"
+    return $?
+  fi
+  cat >&2 <<'EOF'
+ERROR: Docker unavailable (cannot access docker.sock).
+
+Fix: sudo usermod -aG docker "$USER" && newgrp docker
+Or run verification locally and paste output for the agent to record.
+EOF
+  return 1
+}

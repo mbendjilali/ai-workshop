@@ -11,6 +11,11 @@ from __future__ import annotations
 import typer
 
 from alteia_grid_synth import __version__
+from alteia_grid_synth.pipeline.export_cim100 import (
+    ExportCim100Error,
+    ExportCim100InfraError,
+    run_export,
+)
 
 app = typer.Typer(
     name="grid-synth",
@@ -36,6 +41,25 @@ def main(
     ),
 ) -> None:
     """Alteia Synthetic Grid Network Data Generator."""
+
+
+@app.command("export-cim100")
+def export_cim100(
+    feeder: str = typer.Argument(
+        "ieee13",
+        help="Feeder id (e.g. ieee13).",
+    ),
+) -> None:
+    """Export combined CDPSM XML via OpenDSS export cim100."""
+    try:
+        out = run_export(feeder)
+    except ExportCim100Error as exc:
+        typer.echo(f"export-cim100 validation failed: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
+    except ExportCim100InfraError as exc:
+        typer.echo(f"export-cim100 infrastructure error: {exc}", err=True)
+        raise typer.Exit(code=2) from exc
+    typer.echo(str(out))
 
 
 @app.command()

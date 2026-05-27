@@ -1,0 +1,57 @@
+---
+description: BMad story cycle (single/batch), verification gate, sprint-status — use for create/dev/review workflows
+alwaysApply: false
+---
+
+# BMad story cycle (ai-workshop)
+
+## Modes
+
+**Single (default)** — one story per run: create (if backlog) → dev → code review → done. Report sprint delta for that story only.
+
+**Batch** — only when the user says `batch` (optionally `batch max N` or story range e.g. `1-4 through 1-6`):
+
+- Run full cycle per story in sprint order.
+- After **each** story: verification gate must pass before starting the next.
+- HALT entire batch on first gate failure.
+- Code review: apply all `[Patch]` items; HALT on `[Decision]` only.
+
+## Verification gate (mandatory before review/done)
+
+```bash
+./scripts/verify-p0-spine.sh
+```
+
+Requires Docker (`docker` group or `sg docker`). Agent must use `required_permissions: ["all"]` when running this.
+
+**HALT** if:
+
+- Docker/socket unavailable and user has not pasted gate output.
+- Gate exits non-zero.
+- You would use `skip_opendss=True` or skip integration tests as proof of ACs.
+
+**Record** in story file under `Dev Agent Record → Verification evidence`: command, date, exit code, summary lines.
+
+## Sprint rules
+
+- Read `_bmad-output/implementation-artifacts/sprint-status.yaml` top to bottom.
+- Follow `_bmad-output/project-context.md`.
+- Do not skip code review.
+- Do not mark `done` without verification evidence.
+
+## Prompt templates
+
+**Single:**
+
+```
+Run ONE BMad story cycle (create+dev+review). Follow project-context.md.
+Run scripts/verify-p0-spine.sh before review/done (required_permissions: all). HALT if non-zero.
+Report sprint delta.
+```
+
+**Batch:**
+
+```
+Run BMad story cycle in BATCH: [stories]. Per story: full cycle + verify-p0-spine before next. HALT on first failure.
+required_permissions: all
+```

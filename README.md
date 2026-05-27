@@ -2,7 +2,7 @@
 
 Alteia Synthetic Grid Network Data Generator — container-first CDPSM hub pipeline for GridOS Tier A artifacts.
 
-This repository scaffolds the IEEE 13 spine (Epic 1). Story 1.1 delivers the lab Docker image, Typer CLI stub, and local Blazegraph compose stack.
+This repository scaffolds the IEEE 13 spine (Epic 1). Story 1.1 delivers the lab Docker image and Typer CLI stub; Story 1.2 adds the IEEE 13 OpenDSS seed under `feeders/ieee13/`.
 
 ## Prerequisites
 
@@ -106,6 +106,42 @@ grid-synth --help
 
 See [docs/docker-tool-versions.md](docs/docker-tool-versions.md) for the full pin table and upgrade policy (NFR-10).
 
+## IEEE 13 feeder seed (Story 1.2)
+
+OpenDSS master and stable UUID map:
+
+```
+feeders/ieee13/
+  Master.dss
+  uuids.dat
+  IEEE13NodeExtra_BusXY.csv
+```
+
+Verify mRID stability (requires `opendsscmd` on PATH or Docker lab image):
+
+```bash
+./scripts/verify-ieee13-mrid-stability.sh
+```
+
+Export combined CDPSM XML (Story 1.3):
+
+```bash
+./scripts/verify-ieee13-export-cim100.sh
+# or: grid-synth export-cim100 ieee13
+```
+
+**P0 spine gate** (export + mRID + full pytest — use before marking BMad stories done):
+
+```bash
+./scripts/verify-p0-spine.sh
+```
+
+Uses `sg docker` automatically when your user is in the `docker` group but the current shell is not.
+
+Output: `work/ieee13/cim/ieee13cdpsm.xml`. Binding pack stub: `config/gridos-binding-pack.yaml`.
+
+Feeder CLI id: `ieee13`. See [feeders/ieee13/README.md](feeders/ieee13/README.md) for provenance and CIM export parameters.
+
 ## Local Python development (optional)
 
 ```bash
@@ -116,11 +152,11 @@ grid-synth --help
 pytest tests/unit/
 ```
 
-## Scope (Story 1.1)
+## Scope (through Story 1.3)
 
-**Included:** repo layout, Typer CLI stub (`run`, `validate`, `pack`), Docker lab image, Blazegraph compose, version documentation.
+**Included:** repo layout, Typer CLI (`export-cim100`, stub `run`/`validate`/`pack`), Docker lab image, Blazegraph compose, version documentation, IEEE 13 OpenDSS seed, mRID stability probe, `export-cim100` stage + binding pack stub.
 
-**Not yet implemented:** pipeline stages, feeders, SHACL, binding pack, validation gate, CI workflows — see Epic 1 stories 1.2+.
+**Not yet implemented:** Blazegraph ingest, CIMHub roundtrip, validation gate, fabric packager, full binding pack (Story 2.1), CI workflows — see Epic 1 stories 1.4+.
 
 ## Architecture
 

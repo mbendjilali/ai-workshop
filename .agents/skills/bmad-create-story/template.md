@@ -46,4 +46,13 @@ so that {{benefit}}.
 
 ### Completion Notes List
 
+### Verification evidence
+
+_Required before sprint status `review` or `done`. Agent or human runs `scripts/verify-p0-spine.sh` (exit 0)._
+
+- Date:
+- Command: `./scripts/verify-p0-spine.sh`
+- Exit code:
+- Summary:
+
 ### File List

@@ -1,0 +1,9 @@
+! mRID stability probe — run from feeders/ieee13 (see scripts/verify-ieee13-mrid-stability.sh)
+
+Clear
+Redirect Master.dss
+export uuids work/_mrid_probe_1.dat
+
+Clear
+Redirect Master.dss
+export uuids work/_mrid_probe_2.dat

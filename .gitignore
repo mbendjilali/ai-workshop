@@ -18,6 +18,8 @@ htmlcov/
 
 # Docker / runtime outputs
 work/
+feeders/**/opendsscmd.ini
+feeders/**/work/
 
 # IDE
 .idea/

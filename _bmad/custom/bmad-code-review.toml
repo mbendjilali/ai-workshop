@@ -1,0 +1,13 @@
+# Team overrides for bmad-code-review (merged over skill customize.toml).
+
+[workflow]
+
+persistent_facts = [
+  "file:{project-root}/_bmad-output/project-context.md",
+  "Do not set story or sprint status to done unless Dev Agent Record → Verification evidence shows scripts/verify-p0-spine.sh exit 0 in this or an explicitly cited user run.",
+  "In BATCH mode: auto-apply [Patch] findings; HALT only on [Decision] items. In single-story mode: follow default review HALT behavior unless user says apply all patches.",
+]
+
+activation_steps_append = [
+  "When review outcome is Approve: confirm Verification evidence exists; if missing, set new_status=in-progress and HALT.",
+]

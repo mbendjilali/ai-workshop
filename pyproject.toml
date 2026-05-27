@@ -29,3 +29,8 @@ include = [
 dev = [
     "pytest>=7.0",
 ]
+
+[tool.pytest.ini_options]
+markers = [
+    "opendss: requires opendsscmd on PATH or Docker lab image",
+]

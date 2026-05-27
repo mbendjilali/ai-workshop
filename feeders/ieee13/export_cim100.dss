@@ -1,0 +1,8 @@
+! Combined CDPSM CIM100 export for ieee13 (Story 1.3)
+! Run from feeders/ieee13; output under repo work/ieee13/cim/
+
+Clear
+Redirect Master.dss
+
+Set Datapath=../../work/ieee13/cim
+export cim100 file=ieee13cdpsm.xml fid=49AD8E07-3BF9-A4E2-CB8F-C3722F837B62 sid=6C62C905-6FC7-653D-9F1E-1340F974A587 rgnid=73C512BD-7249-4F50-50DA-D93849B89C43 sgrid=ABEB635F-729D-24BF-B8A4-E2EF268D8B9E substation=ieee13_sub geo=ieee13_geo subgeo=ieee13_subgeo
