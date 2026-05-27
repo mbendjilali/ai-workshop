@@ -3,10 +3,13 @@ title: "PRD — Alteia Synthetic Grid Network Data Generator for GridOS"
 status: final
 created: 2026-05-27
 updated: 2026-05-27
+p0_workshop_completed: 2026-05-27
+p0_workshop_outcomes: p0-workshop-outcomes-2026-05-27.md
 inputs:
   - brief-ai-workshop-2026-05-27
   - brief-addendum
   - brief-decision-log-d1-d9
+  - p0-workshop-outcomes-2026-05-27
 scope: P0 + P1
 product: Alteia synthetic grid network data generator
 ---
@@ -48,9 +51,9 @@ This is an **enabling data product** for GridOS quality. Value comes from GridOS
 
 ### 2.3 Key User Journeys
 
-- **UJ-1. Alex (platform engineer) co-designs the ingest spine.** Alex joins the P0 week-1 workshop with Alteia. Together they agree CDPSM profiles (FUN/EP/TOPO/CAT/GEO/SSH), spatial container rules, mRID stability, and SHACL subset shapes. Alex signs P0 when the binding pack v0 and IEEE 13 fabric ZIP ingest without manual repair. *Realizes P0 gate.*
+- **UJ-1. Elena (platform engineer) co-designs the ingest spine.** Elena Vasquez joins the P0 week-1 workshop with Alteia. Together they agree CDPSM profiles (FUN/EP/TOPO/CAT/GEO/SSH), class allow-list v0 (§10.1.1), spatial container rules, mRID stability, and SHACL subset shapes. Elena signs P0 on 2026-05-27 when binding pack v0 and ingest spec are recorded. *Realizes P0 gate.*
 
-- **UJ-2. Jordan (ADMS QA) runs smoke regression on promoted feeders.** Jordan pulls `ieee9500-asbuilt-v1.x.x` from the internal registry, imports via documented file-based ingest, runs trace + PF smoke scripts. Pass criteria were co-authored in P0; Jordan signs P1 when 4/4 IEEE feeders pass. *Realizes P1 gate.*
+- **UJ-2. Marcus (ADMS QA) runs smoke regression on promoted feeders.** Marcus Chen pulls `ieee9500-asbuilt-v1.x.x` from `https://artifactory.gridos.lab/tier-a/datasets/`, imports via documented file-based ingest, runs trace + PF smoke scripts. Pass criteria were co-authored in P0; Marcus signs P1 when 4/4 IEEE feeders pass. *Realizes P1 gate.*
 
 - **UJ-3. Sam (Alteia engineer) promotes IEEE 123 through CI.** Sam opens a PR touching the packager. CI runs `validate-ieee13` and `validate-ieee123` (< 10 min). On merge to main, nightly jobs cover 9500. Tag triggers `publish-tier-a` with manifest, SHACL report, and pf-diff-report. *Realizes FR-1 through FR-24.*
 
@@ -87,9 +90,10 @@ This is an **enabling data product** for GridOS quality. Value comes from GridOS
 Alteia can facilitate a P0 week-1 workshop with GridOS platform/fabric engineering to produce a written **fabric CDPSM ingest spec** covering: required profiles, spatial container model (`Feeder`, `SubGeographicalRegion`), mRID/uuid mapping, and smoke ingest procedure.
 
 **Consequences (testable):**
-- Written ingest spec document exists and is referenced by binding pack v0.
+- Written ingest spec document exists and is referenced by binding pack v0 (`p0-workshop-outcomes-2026-05-27.md` §2 — tutorial emulation).
 - Spec lists required CDPSM sub-profiles: FUN, EP, TOPO, CAT, GEO, SSH.
-- Platform P0 approver (see §8) signs spec before P1 feeder promotion begins.
+- Spec includes **fabric CDPSM class allow-list v0** (§10.1.1); artifacts with disallowed classes fail ingest validation.
+- **Elena Vasquez** (platform P0 approver, §8) signed P0 on **2026-05-27** before P1 feeder promotion begins.
 
 #### FR-2: Binding pack v0 publication
 
@@ -112,7 +116,7 @@ Alteia can co-develop **GridOS CDPSM subset SHACL** shapes with platform enginee
 **Feature-specific NFRs:**
 - Binding pack changes require platform P0 re-approval when ingest subset or mRID rules change.
 
-**Notes:** `[NOTE FOR PM]` Record approver names at P0 kickoff (placeholder until workshop).
+**Notes:** P0 workshop complete — approver and CDPSM subset recorded in §8, §10.1.1, `p0-workshop-outcomes-2026-05-27.md`.
 
 ---
 
@@ -248,11 +252,12 @@ CI can run `validate-ieee13` on every PR and complete IEEE 13 + 123 validation i
 
 #### FR-15: CI jobs — nightly and publish
 
-CI can run `validate-ieee9500` nightly and `publish-tier-a` on **git tag** to an **internal registry** with semver-correlated artifacts (registry URL TBD at P0 — OQ-5).
+CI can run `validate-ieee9500` nightly and `publish-tier-a` on **git tag** to the internal registry at **`https://artifactory.gridos.lab/tier-a/datasets/`** (§10.5).
 
 **Consequences (testable):**
 - Nightly 9500 job produces pf-diff and memory/time metrics.
-- Tag publish pushes versioned artifact with immutable checksum.
+- Tag publish pushes versioned artifact to `{base_uri}{dataset_id}/v{semver}/` with immutable checksum.
+- Publish uses service account `svc-alteia-synth-gen-ci` per §10.5 access policy.
 
 **Out of Scope:**
 - REST self-service lab API (non-goal).
@@ -343,9 +348,11 @@ ADMS QA can execute smoke tests on all four promoted bundles and record pass/fai
 
 #### FR-22: Artifact registry publication
 
-Alteia can publish promoted Tier A artifacts to an internal registry triggered by **git tag**, with **semver + git tag** correlation in manifest (P-D7).
+Alteia can publish promoted Tier A artifacts to the internal registry at **`https://artifactory.gridos.lab/tier-a/datasets/`**, triggered by **git tag**, with **semver + git tag** correlation in manifest (P-D7, §10.5).
 
 **Consequences (testable):**
+- Published artifact URI matches `{registry_base_uri}{dataset_id}/v{semver}/manifest.json` pattern.
+- CI publish principal is `svc-alteia-synth-gen-ci`; human read via `gridos-lab-artifacts-ro`.
 - Each published artifact is retrievable by `dataset_id` + `version`.
 - Registry entry includes manifest, checksums, binding pack version, validation status.
 
@@ -443,7 +450,7 @@ CIMHub, Blazegraph, and OpenDSS versions pinned in Docker image with documented 
 
 **Primary**
 
-- **SM-1:** P0 fabric ingest spec signed by platform approver. Validates FR-1, FR-2.
+- **SM-1:** P0 fabric ingest spec signed by **Elena Vasquez** (2026-05-27). Validates FR-1, FR-2.
 - **SM-2:** Binding pack v0 published; 100% Tier A artifacts reference it. Validates FR-2, FR-11. Traces D8.
 - **SM-3:** Fabric smoke ingest **4/4** IEEE feeders. Validates FR-19.
 - **SM-4:** ADMS smoke trace + PF **4/4** with ADMS QA sign-off. Validates FR-20, FR-21. Traces D9.
@@ -465,12 +472,12 @@ CIMHub, Blazegraph, and OpenDSS versions pinned in Docker image with documented 
 
 ## 8. Stakeholders and Approvals
 
-Two-step sign-off [D9]. **Placeholder names until P0 kickoff workshop** [OQ-3, OQ-4].
+Two-step sign-off [D9]. **P0 workshop completed 2026-05-27** — see `p0-workshop-outcomes-2026-05-27.md`.
 
-| Milestone | Deliverable approved | Approver role | Placeholder name |
-|-----------|---------------------|---------------|------------------|
-| **P0 done** | CDPSM subset + mRID rules + binding pack v0; IEEE 13 fabric ingest | GridOS platform / fabric engineering | `[TBD — Platform Approver]` |
-| **P1 done** | 4/4 feeders pass ADMS trace + PF smoke | GridOS ADMS QA | `[TBD — ADMS QA Approver]` |
+| Milestone | Deliverable approved | Approver role | Named approver |
+|-----------|---------------------|---------------|----------------|
+| **P0 done** | CDPSM subset + mRID rules + binding pack v0; IEEE 13 fabric ingest | GridOS platform / fabric engineering | **Elena Vasquez** (signed 2026-05-27) |
+| **P1 done** | 4/4 feeders pass ADMS trace + PF smoke | GridOS ADMS QA | **Marcus Chen** |
 | **Build** | Generator, CI artifacts, registry publications | Alteia engineering | Alteia (builder) |
 
 **Consulted (not gating v1):** DERMS QA, Network Model Orchestration integrators — where model semantics affect their paths.
@@ -487,7 +494,7 @@ Two-step sign-off [D9]. **Placeholder names until P0 kickoff workshop** [OQ-3, O
 | No public CDPSM SHACL | Weak automated conformance | Co-develop GridOS subset SHACL | FR-3, FR-9 |
 | Unrealistic physics | Unsafe ADMS normalization | Dual PF gate before promotion | FR-8 |
 | Scope creep into Visual Intelligence | Delays network v1 | Non-goals; mRID stability only | D3, §6.2 |
-| Unclear approvers | P0/P1 stall | Placeholders → names at kickoff | §8 |
+| Unclear approvers | P0/P1 stall | **Resolved** — Elena Vasquez (P0), Marcus Chen (P1) | §8, WS-3/WS-4 |
 
 ---
 
@@ -498,11 +505,12 @@ Two-step sign-off [D9]. **Placeholder names until P0 kickoff workshop** [OQ-3, O
 ### 10.1 Binding pack v0 (`gridos-binding-pack.yaml`)
 
 ```yaml
-binding_version: "2026.05.0"          # semver; bump on subset/rule change
-platform_release: "GridOS-TBD"        # latest GridOS release at publish [D8]
+binding_version: "2026.05.1"          # bumped post-P0 workshop (subset + release pin)
+platform_release: "GridOS-2026.2-lab" # P0 workshop WS-1 [D8]
 cdpsm_edition: "IEC-61968-13:2021"
 cim_namespace: "http://iec.ch/TC57/CIM100#"
 profiles_required: [FUN, EP, TOPO, CAT, GEO, SSH]
+cdpsm_class_subset_ref: "§10.1.1"     # fabric allow-list v0 (OQ-2 resolved)
 mrid_rules:
   stable_uuid: true
   source: opendss_uuids_dat
@@ -510,6 +518,9 @@ fabric_ingest:
   container_type: Feeder
   spatial: SubGeographicalRegion required
   mode: file_zip                        # v1 confirmed; REST deferred [P-D3]
+artifact_registry:
+  base_uri: "https://artifactory.gridos.lab/tier-a/datasets/"
+  publish_principal: "svc-alteia-synth-gen-ci"
 validation:
   shacl_bundle: "./shacl/gridos-cdpsm-subset.ttl"
   pf_gate: opendss_gridlabd
@@ -518,6 +529,14 @@ validation:
     angle_delta_deg_max: 0.01
     source_kw_kvar_delta_pct_max: 0.5
 ```
+
+### 10.1.1 Fabric CDPSM class subset v0 (P0 signed)
+
+Normative allow-list for Tier A fabric ingest. Classes not listed are **rejected** at validation (FR-1, FR-9). Full table: `p0-workshop-outcomes-2026-05-27.md` §2.
+
+**Allowed (summary):** `ConnectivityNode`, `Terminal`, `ACLineSegment`, `EnergyConsumer`, `PowerTransformer`, `PowerTransformerEnd`, `LinearShuntCompensator`, `SeriesCompensator`, `Breaker`, `Disconnector`, `Fuse`, `LoadBreakSwitch`, `Recloser`, `RegulatingControl`, `TapChanger`, `RatioTapChanger`, `BaseVoltage`, `VoltageLevel`, `BusbarSection`, `Feeder`, `Substation`, `SubGeographicalRegion`, `GeographicalRegion`, `Location`, `PositionPoint`, `Asset`, `AssetInfo`.
+
+**Excluded v0:** `TopologicalNode`, `TopologicalIsland`, CGMES-only TSO equipment, `DifferenceModel`, customer/CIS classes, SCADA measurement instances.
 
 ### 10.2 Fabric ZIP / Tier A artifact layout v0
 
@@ -545,9 +564,10 @@ Packaging: `.tar.gz` required [ASSUMPTION A6]; OCI image optional for v0 with eq
   "dataset_id": "ieee9500-asbuilt",
   "version": "1.0.0",
   "tier": "A",
-  "binding_pack_version": "2026.05.0",
+  "binding_pack_version": "2026.05.1",
   "cdpsm_edition": "IEC-61968-13:2021",
-  "platform_release": "GridOS-TBD",
+  "platform_release": "GridOS-2026.2-lab",
+  "registry_uri": "https://artifactory.gridos.lab/tier-a/datasets/ieee9500-asbuilt/v1.0.0/",
   "validation_tiers": ["T0", "T1"],
   "feeders": [{"mRID": "<uuid>", "name": "ieee9500", "node_count": 9500}],
   "validation": {
@@ -572,7 +592,19 @@ Packaging: `.tar.gz` required [ASSUMPTION A6]; OCI image optional for v0 with eq
 2. `binding_pack_version` in manifest matches active binding pack.
 3. Platform P0 sign-off obtained before first P1 feeder promotion to fabric lab.
 4. **Intermediate dev-registry publishes:** full validation gate required; **ADMS smoke not required** (P-D8, Option A).
-5. **P1 milestone closure:** ADMS smoke pass required for all four feeders (FR-21, SM-4).
+5. **P1 milestone closure:** ADMS smoke pass required for all four feeders (FR-21, SM-4); **Marcus Chen** signs P1 per §8.
+
+### 10.5 Internal artifact registry v0 (P0 signed)
+
+| Field | Value |
+|-------|--------|
+| **Base URI** | `https://artifactory.gridos.lab/tier-a/datasets/` |
+| **Object path** | `{dataset_id}/v{semver}/` (contains §10.2 layout) |
+| **Publish trigger** | Git tag on `main`; manifest `git_tag` must match |
+| **CI principal** | `svc-alteia-synth-gen-ci` |
+| **Read access** | AD group `gridos-lab-artifacts-ro` |
+| **Publish access** | AD group `gridos-lab-artifacts-rw` |
+| **Immutability** | Same semver + different checksum → publish rejected (FR-22) |
 
 ---
 
@@ -648,15 +680,22 @@ Global gate tolerances: §10.1 `pf_tolerances`. Each feeder adds scoped tests.
 | **P-D3** | File-based fabric ZIP ingest for v1 | FR-19, §10.1 `mode: file_zip` |
 | **P-D7** | Git-tag → semver internal registry | FR-15, FR-22, §10.3 `git_tag` |
 | **P-D8** | Dev publish: validation gate only; ADMS smoke at P1 sign-off | §10.4 rules 4–5, FR-21 |
+| **P-D9** | P0 workshop — fabric CDPSM class subset v0 | §10.1.1; FR-1; `p0-workshop-outcomes` §2 |
+| **P-D10** | P0 approver Elena Vasquez; P1 approver Marcus Chen | §8; FR-1, FR-21 |
+| **P-D11** | Registry base URI + access policy | §10.5; FR-15, FR-22 |
 
 ---
 
-## 13. Open Questions
+## 13. Open Questions — P0 Workshop Resolutions (2026-05-27)
 
-1. **OQ-2:** Exact CDPSM class subset for fabric — blocks P0 sign-off. Owner: platform + Alteia.
-2. **OQ-3:** Platform P0 approver name. Owner: P0 kickoff.
-3. **OQ-4:** ADMS QA P1 approver name. Owner: P0 kickoff.
-4. **OQ-5:** Internal artifact registry **URL/path** and access policy (publish model confirmed: git tag → semver artifact). Owner: platform + Alteia before first publish.
+| ID | Was | Resolution | PRD location |
+|----|-----|------------|--------------|
+| **OQ-2** | CDPSM class subset TBD | **Fabric allow-list v0** signed at P0 | §10.1.1, FR-1 |
+| **OQ-3** | Platform approver TBD | **Elena Vasquez** | §8 |
+| **OQ-4** | ADMS QA approver TBD | **Marcus Chen** | §8 |
+| **OQ-5** | Registry URL TBD | `https://artifactory.gridos.lab/tier-a/datasets/` + §10.5 access policy | FR-15, FR-22 |
+
+**No open P0 blockers remain.** Remaining tutorial gaps: numeric CI memory bounds (architecture), ADMS smoke script IDs (implementation).
 
 ---
 
@@ -669,7 +708,7 @@ Global gate tolerances: §10.1 `pf_tolerances`. Each feeder adds scoped tests.
 - **A6** (§10.2): `.tar.gz` required; OCI optional for v0.
 - **A7** (FR-14): Standard org CI runners meet 10 min budget for 13+123.
 
-**Confirmed (no longer assumptions):** file-based fabric ingest (P-D3); git-tag internal registry (P-D7); ADMS smoke at P1 sign-off only (P-D8).
+**Confirmed (no longer assumptions):** file-based fabric ingest (P-D3); git-tag internal registry (P-D7); ADMS smoke at P1 sign-off only (P-D8); P0 CDPSM subset (P-D9); named approvers (P-D10); registry URI and access policy (P-D11).
 
 ---
 
