@@ -1,5 +1,5 @@
 # generated: 2026-05-27
-# last_updated: 2026-05-27
+# last_updated: 2026-05-28
 # project: ai-workshop
 # project_key: NOKEY
 # tracking_system: file-system
@@ -37,7 +37,7 @@
 # - batch_policy: single story per run unless user says "batch"
 
 generated: 2026-05-27
-last_updated: 2026-05-27
+last_updated: 2026-05-28
 project: ai-workshop
 project_key: NOKEY
 tracking_system: file-system

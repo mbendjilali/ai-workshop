@@ -49,9 +49,43 @@ Run scripts/verify-p0-spine.sh before review/done (required_permissions: all). H
 Report sprint delta.
 ```
 
-**Batch:**
+**Batch (one epic):**
+
+Replace `EPIC_N` (e.g. `2`) and optional `MAX_STORIES` (e.g. `4` or `all`).
 
 ```
-Run BMad story cycle in BATCH: [stories]. Per story: full cycle + verify-p0-spine before next. HALT on first failure.
-required_permissions: all
+Run BMad story cycle in BATCH for Epic EPIC_N only.
+
+Authoritative tracking:
+@_bmad-output/implementation-artifacts/sprint-status.yaml
+@_bmad-output/project-context.md
+@_bmad-output/planning-artifacts/epics.md
+
+Scope:
+- Process stories in sprint-status order where key matches EPIC_N-* (e.g. 2-1, 2-2, …).
+- Stop after MAX_STORIES completed cycles, or all Epic EPIC_N stories done, whichever comes first.
+- Do NOT start stories from other epics.
+
+Per story (strict order, HALT on first failure):
+1. If status is backlog → run bmad-create-story (auto-discover; must be this epic’s next backlog story).
+2. If ready-for-dev or after create → run bmad-dev-story for that story file until ACs met; status → review.
+3. Run bmad-code-review for that story; apply [Patch] findings; HALT on [Decision]; status → done when clean.
+4. Run verification gate BEFORE starting the next story:
+   ./scripts/verify-p0-spine.sh
+   (Shell: required_permissions: all — Docker/socket access.)
+   - Exit 0 required. HALT entire batch if non-zero.
+   - Record in story Dev Agent Record → Verification evidence: command, date, exit code, key OK lines.
+5. Update sprint-status.yaml for completed story; then continue to next Epic EPIC_N story.
+
+HALT conditions (entire batch stops):
+- verify-p0-spine.sh non-zero or Docker unavailable without user-pasted gate output
+- dev-story or code-review cannot complete ACs
+- create-story cannot find expected next backlog story
+- User said stop
+
+After batch ends (success or HALT):
+- Report: stories completed, current sprint-status snapshot, verification evidence per story, deferred items.
+- If all Epic EPIC_N stories are done: set epic-EPIC_N: done in sprint-status.yaml and suggest optional bmad-retrospective.
+
+Do not implement multiple stories in one dev pass. One story = one full cycle + one gate run.
 ```
