@@ -1,0 +1,11 @@
+# Build context exclusions
+.venv/
+_bmad-output/
+.git/
+.pytest_cache/
+__pycache__/
+*.pyc
+work/
+dist/
+*.egg-info/
+.agents/

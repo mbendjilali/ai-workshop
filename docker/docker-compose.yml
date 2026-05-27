@@ -1,0 +1,29 @@
+# Local development stack for alteia-grid-synth.
+#
+# Blazegraph SPARQL endpoint (GridAPPS-D convention): http://localhost:8889/bigdata/sparql
+# From the lab container, use: http://blazegraph:8080/bigdata/sparql
+
+services:
+  blazegraph:
+    image: lyrasis/blazegraph:2.1.5
+    ports:
+      - "8889:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/bigdata/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  lab:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: alteia-grid-synth:lab
+    depends_on:
+      blazegraph:
+        condition: service_healthy
+    environment:
+      BLAZEGRAPH_SPARQL_URL: http://blazegraph:8080/bigdata/sparql
+    stdin_open: true
+    tty: true
