@@ -130,7 +130,7 @@ Export combined CDPSM XML (Story 1.3):
 # or: grid-synth export-cim100 ieee13
 ```
 
-**P0 spine gate** (export + mRID + full pytest — use before marking BMad stories done):
+**P0 spine gate** (export + mRID + ingest + roundtrip + pf-diff + pytest):
 
 ```bash
 ./scripts/verify-p0-spine.sh
@@ -138,9 +138,15 @@ Export combined CDPSM XML (Story 1.3):
 
 Uses `sg docker` automatically when your user is in the `docker` group but the current shell is not.
 
-Output: `work/ieee13/cim/ieee13cdpsm.xml`. Binding pack stub: `config/gridos-binding-pack.yaml`.
-
 Feeder CLI id: `ieee13`. See [feeders/ieee13/README.md](feeders/ieee13/README.md) for provenance and CIM export parameters.
+
+Hub stages (Stories 1.4–1.6):
+
+```bash
+grid-synth ingest-blazegraph ieee13    # requires Blazegraph on :8889
+grid-synth cimhub-roundtrip ieee13   # requires prior ingest + Java/CIMHub
+grid-synth pf-diff ieee13            # gold vs roundtrip OpenDSS PF
+```
 
 ## Local Python development (optional)
 
@@ -152,11 +158,11 @@ grid-synth --help
 pytest tests/unit/
 ```
 
-## Scope (through Story 1.3)
+## Scope (through Story 1.6)
 
-**Included:** repo layout, Typer CLI (`export-cim100`, stub `run`/`validate`/`pack`), Docker lab image, Blazegraph compose, version documentation, IEEE 13 OpenDSS seed, mRID stability probe, `export-cim100` stage + binding pack stub.
+**Included:** repo layout, Typer CLI (`export-cim100`, `ingest-blazegraph`, `cimhub-roundtrip`, `pf-diff`, stub `run`/`validate`/`pack`), Docker lab image (Java/CIMHub fix), Blazegraph compose, IEEE 13 P0 hub spine through PF diff.
 
-**Not yet implemented:** Blazegraph ingest, CIMHub roundtrip, validation gate, fabric packager, full binding pack (Story 2.1), CI workflows — see Epic 1 stories 1.4+.
+**Not yet implemented:** validation gate, fabric packager, full binding pack (Story 2.1), CI workflows — see Epic 2+.
 
 ## Architecture
 

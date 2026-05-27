@@ -34,6 +34,8 @@ RUN apt-get update \
 
 # Java 11 JRE — copied from CIMHub base (bullseye); openjdk-11 is not in bookworm repos
 COPY --from=cimhub-tools /usr/lib/jvm/java-11-openjdk-amd64 /usr/lib/jvm/java-11-openjdk-amd64
+COPY --from=cimhub-tools /etc/java-11-openjdk /etc/java-11-openjdk
+COPY --from=cimhub-tools /etc/ssl/certs/java /etc/ssl/certs/java
 
 # GridLAB-D (G-4) — copied from CIMHub reference image
 COPY --from=cimhub-tools /usr/local/bin/gridlabd /usr/local/bin/gridlabd

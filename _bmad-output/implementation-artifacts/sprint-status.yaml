@@ -44,13 +44,13 @@ tracking_system: file-system
 story_location: _bmad-output/implementation-artifacts
 
 development_status:
-  epic-1: in-progress
+  epic-1: done
   1-1-initialize-pipeline-repo-and-docker-lab-image: done
   1-2-check-in-ieee-13-opendss-seed-with-stable-uuid-map: done
   1-3-implement-export-cim100-pipeline-stage: done
-  1-4-implement-blazegraph-ingest-stage: backlog
-  1-5-implement-cimhub-roundtrip-to-render-mirrors: backlog
-  1-6-implement-cimhub-pf-vs-opendss-gold-comparison: backlog
+  1-4-implement-blazegraph-ingest-stage: done
+  1-5-implement-cimhub-roundtrip-to-render-mirrors: done
+  1-6-implement-cimhub-pf-vs-opendss-gold-comparison: done
   epic-1-retrospective: optional
 
   epic-2: backlog

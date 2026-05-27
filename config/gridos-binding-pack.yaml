@@ -11,3 +11,5 @@ profiles_required:
   - CAT
   - GEO
   - SSH
+pf_tolerances:
+  vm_delta_pct_max: 0.1

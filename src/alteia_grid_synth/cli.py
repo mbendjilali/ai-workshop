@@ -8,13 +8,35 @@ Exit codes (enforced in Story 3.3):
 
 from __future__ import annotations
 
+import logging
+
 import typer
 
 from alteia_grid_synth import __version__
+from alteia_grid_synth.pipeline.cimhub_roundtrip import (
+    CimhubRoundtripError,
+    CimhubRoundtripInfraError,
+    run_roundtrip,
+)
 from alteia_grid_synth.pipeline.export_cim100 import (
     ExportCim100Error,
     ExportCim100InfraError,
     run_export,
+)
+from alteia_grid_synth.pipeline.ingest_blazegraph import (
+    IngestBlazegraphError,
+    IngestBlazegraphInfraError,
+    run_ingest,
+)
+from alteia_grid_synth.pipeline.pf_diff import (
+    PfDiffError,
+    PfDiffInfraError,
+    run_pf_diff,
+)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(levelname)s %(name)s %(message)s",
 )
 
 app = typer.Typer(
@@ -60,6 +82,63 @@ def export_cim100(
         typer.echo(f"export-cim100 infrastructure error: {exc}", err=True)
         raise typer.Exit(code=2) from exc
     typer.echo(str(out))
+
+
+@app.command("ingest-blazegraph")
+def ingest_blazegraph(
+    feeder: str = typer.Argument(
+        "ieee13",
+        help="Feeder id (e.g. ieee13).",
+    ),
+) -> None:
+    """Load combined CDPSM XML into Blazegraph."""
+    try:
+        run_ingest(feeder)
+    except IngestBlazegraphError as exc:
+        typer.echo(f"ingest-blazegraph validation failed: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
+    except IngestBlazegraphInfraError as exc:
+        typer.echo(f"ingest-blazegraph infrastructure error: {exc}", err=True)
+        raise typer.Exit(code=2) from exc
+    typer.echo(f"ingest-blazegraph OK: {feeder}")
+
+
+@app.command("cimhub-roundtrip")
+def cimhub_roundtrip(
+    feeder: str = typer.Argument(
+        "ieee13",
+        help="Feeder id (e.g. ieee13).",
+    ),
+) -> None:
+    """Run CIMHub roundtrip to OpenDSS and GridLAB-D render mirrors."""
+    try:
+        paths = run_roundtrip(feeder)
+    except CimhubRoundtripError as exc:
+        typer.echo(f"cimhub-roundtrip validation failed: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
+    except CimhubRoundtripInfraError as exc:
+        typer.echo(f"cimhub-roundtrip infrastructure error: {exc}", err=True)
+        raise typer.Exit(code=2) from exc
+    typer.echo(str(paths.render_root))
+
+
+@app.command("pf-diff")
+def pf_diff(
+    feeder: str = typer.Argument(
+        "ieee13",
+        help="Feeder id (e.g. ieee13).",
+    ),
+) -> None:
+    """Compare OpenDSS gold PF vs CIMHub roundtrip OpenDSS mirror."""
+    try:
+        report = run_pf_diff(feeder)
+    except PfDiffError as exc:
+        typer.echo(f"pf-diff validation failed: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
+    except PfDiffInfraError as exc:
+        typer.echo(f"pf-diff infrastructure error: {exc}", err=True)
+        raise typer.Exit(code=2) from exc
+    typer.echo(str(report))
 
 
 @app.command()

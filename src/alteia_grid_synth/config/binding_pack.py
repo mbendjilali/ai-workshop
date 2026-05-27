@@ -15,6 +15,7 @@ class BindingPack:
     profiles_required: tuple[str, ...]
     cdpsm_edition: str
     platform_release: str
+    pf_vm_delta_pct_max: float = 0.1
 
 
 def repo_root(start: Path | None = None) -> Path:
@@ -31,6 +32,7 @@ def _parse_binding_pack_text(text: str) -> dict[str, object]:
     data: dict[str, object] = {}
     profiles: list[str] = []
     in_profiles = False
+    in_pf_tolerances = False
 
     for raw in text.splitlines():
         stripped = raw.strip()
@@ -44,12 +46,22 @@ def _parse_binding_pack_text(text: str) -> dict[str, object]:
             continue
         if line == "profiles_required:":
             in_profiles = True
+            in_pf_tolerances = False
+            continue
+        if line == "pf_tolerances:":
+            in_pf_tolerances = True
+            in_profiles = False
             continue
         if in_profiles:
             if line.startswith("- "):
                 profiles.append(line[2:].strip())
                 continue
             in_profiles = False
+        if in_pf_tolerances:
+            if line.startswith("vm_delta_pct_max:"):
+                data["pf_vm_delta_pct_max"] = line.split(":", 1)[1].strip()
+                continue
+            in_pf_tolerances = False
         if ":" in line:
             key, value = line.split(":", 1)
             key = key.strip()
@@ -69,10 +81,12 @@ def load_binding_pack(path: Path | None = None) -> BindingPack:
 
     data = _parse_binding_pack_text(pack_path.read_text(encoding="utf-8"))
     profiles = tuple(str(p) for p in data.get("profiles_required", ()))
+    pf_vm = float(data.get("pf_vm_delta_pct_max", 0.1))
     return BindingPack(
         binding_version=str(data["binding_version"]),
         cim_namespace=str(data["cim_namespace"]),
         profiles_required=profiles,
         cdpsm_edition=str(data.get("cdpsm_edition", "")),
         platform_release=str(data.get("platform_release", "")),
+        pf_vm_delta_pct_max=pf_vm,
     )

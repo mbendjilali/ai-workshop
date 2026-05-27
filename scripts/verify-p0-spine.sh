@@ -22,12 +22,15 @@ preflight_feeder_writable() {
 
 preflight_feeder_writable
 
-echo "==> P0 spine verification (IEEE 13 export + mRID stability + pytest)"
+echo "==> P0 spine verification (IEEE 13 export + mRID stability + hub stages + pytest)"
 with_docker_access bash -c "
   set -euo pipefail
   cd '${ROOT}'
   ./scripts/verify-ieee13-export-cim100.sh
   ./scripts/verify-ieee13-mrid-stability.sh
+  ./scripts/verify-ieee13-ingest-blazegraph.sh
+  ./scripts/verify-ieee13-cimhub-roundtrip.sh
+  ./scripts/verify-ieee13-pf-diff.sh
   if [[ -x .venv/bin/pytest ]]; then
     .venv/bin/pytest tests/ -q
   else

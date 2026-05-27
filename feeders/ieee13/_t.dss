@@ -1,0 +1,5 @@
+clear
+redirect Master.dss
+Set mode=Snapshot
+Solve
+export voltages file=/tmp/gold_v.csv

@@ -9,3 +9,4 @@ def test_load_cim_namespace():
     pack = load_binding_pack()
     assert pack.cim_namespace == "http://iec.ch/TC57/CIM100#"
     assert pack.profiles_required == ("FUN", "EP", "TOPO", "CAT", "GEO", "SSH")
+    assert pack.pf_vm_delta_pct_max == 0.1
